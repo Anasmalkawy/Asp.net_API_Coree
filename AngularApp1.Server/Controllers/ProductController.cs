@@ -1,4 +1,5 @@
-﻿using AngularApp1.Server.Models;
+﻿using AngularApp1.Server.IDataService;
+using AngularApp1.Server.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,10 @@ namespace AngularApp1.Server.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly MyDbContext _db;
-        public ProductController(MyDbContext db)
+        private readonly AngularApp1.Server.IDataService.IDataService _data;
+        public ProductController(AngularApp1.Server.IDataService.IDataService db)
         {
-            _db = db;
+            _data = db;
         }
 
 
@@ -20,7 +21,7 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("products")]
         public IActionResult GetAllProducts()
         {
-            var products = _db.Products.ToList();
+            var products = _data.GetAllProducts();
             return Ok(products);
         }
 
@@ -30,7 +31,7 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("productsbyid")]
         public IActionResult GetProductById(int id)
         {
-            var product = _db.Products.Find(id);
+            var product = _data.GetProductById(id);
             return Ok(product);
         }
 
@@ -39,7 +40,7 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("productsbyname")]
         public IActionResult GetProductByName(string name)
         {
-            var product = _db.Products.FirstOrDefault(p => p.Name == name);
+            var product = _data.GetProductByName(name);
             return Ok(product);
         }
 
@@ -48,8 +49,22 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("productsFirst")]
         public IActionResult GetFirstProduct()
         {
-            var product = _db.Products.First();
+            var product = _data.GetFirstProduct();
             return Ok(product);
+        }
+
+
+        [HttpDelete("delete")]
+        public IActionResult DeleteProduct(int id) {
+            var data = _data.DeleteProduct(id);
+            if (data == true)
+            {
+                return Ok("delete done");
+            }
+            else
+            {
+                return NotFound("delete failed");
+            }
         }
 
 

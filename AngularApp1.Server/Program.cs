@@ -1,3 +1,5 @@
+using AngularApp1.Server.DataService;
+using AngularApp1.Server.IDataService;
 using AngularApp1.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnectionString")));
 
+
+builder.Services.AddScoped<IDataService,DataService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -28,7 +43,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseCors("AllowAllOrigins");
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");

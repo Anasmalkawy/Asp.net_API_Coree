@@ -1,4 +1,5 @@
-﻿using AngularApp1.Server.Models;
+﻿using AngularApp1.Server.IDataService;
+using AngularApp1.Server.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +9,16 @@ namespace AngularApp1.Server.Controllers
     [ApiController]
     public class CategorieController : ControllerBase
     {
-        private readonly MyDbContext _db;
-        public CategorieController(MyDbContext dbContext)
+        private readonly AngularApp1.Server.IDataService.IDataService _data;
+        public CategorieController(AngularApp1.Server.IDataService.IDataService data)
         {
-            _db = dbContext;
+            _data = data;
         }
 
         [HttpGet("getallcategories")]
         public IActionResult getallcategories()
         {
-            var users = _db.Categories.ToList();
+            var users = _data.GetAllCategory();
             return Ok(users);
         }
 
@@ -25,7 +26,7 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("getbyidcategories")]
         public IActionResult getcategories(int id)
         {
-            var categories = _db.Categories.SingleOrDefault(x => x.Id == id);
+            var categories = _data.GetCategory(id);
             return Ok(categories);
         }
 
@@ -33,7 +34,7 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("getbynamecategories")]
         public IActionResult getcategoriesbyname(string name)
         {
-            var categories = _db.Categories.FirstOrDefault(x => x.Name == name);
+            var categories = _data.GetCategoryByName;
             return Ok(categories);
         }
 
@@ -41,9 +42,24 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("categoriesFirst")]
         public IActionResult categoriesFirst()
         {
-            var categories = _db.Categories.First();
-            return Ok(categories);
+            var firstone = _data.GetCategoryFirst();
+            return Ok(firstone);
         }
+
+        [HttpDelete("deleteCategories")]
+        public IActionResult delete(int id)
+        {
+            var deleteST = _data.deletecategories(id);
+            if (deleteST == true)
+            {
+                return Ok("delete done");
+            }
+            else
+            {
+                return NotFound("delete failed");
+            }
+        }
+
 
     }
 }
