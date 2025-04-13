@@ -1,5 +1,6 @@
 ﻿using AngularApp1.Server.IDataService;
 using AngularApp1.Server.Models;
+using AngularApp1.Server.Models.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,6 +59,38 @@ namespace AngularApp1.Server.Controllers
             {
                 return NotFound("delete failed");
             }
+        }
+
+        [HttpPost("add")]
+        public IActionResult AddCategory([FromBody] CategoryDTO dto)
+        {
+            if (dto == null)
+                return BadRequest();
+            _data.AddCategory(dto);
+            return Ok();
+
+        }
+
+        [HttpPut("editVategories/{id}")]
+        public IActionResult editcategoriesbyid(int id, [FromForm] CategoryDTO category)
+        {
+            if (category == null)
+                return BadRequest();
+
+            else
+            {
+                var userr = editcategoriesbyid(id, category);
+                if (userr == null)
+                {
+                    return BadRequest();
+
+                }
+                else
+                {
+                    return StatusCode(201, "added done");
+                }
+            }
+
         }
 
 

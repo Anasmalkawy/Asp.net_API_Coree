@@ -1,7 +1,8 @@
-using AngularApp1.Server.DataService;
+﻿using AngularApp1.Server.DataService;
 using AngularApp1.Server.IDataService;
 using AngularApp1.Server.Models;
 using Microsoft.EntityFrameworkCore;
+using AngularApp1.Server.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,5 +48,7 @@ app.UseCors("AllowAllOrigins");
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
+
+app.MapUserEndpoints();
 
 app.Run();

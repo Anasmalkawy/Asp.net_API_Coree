@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AngularApp1.Server.IDataService;
 using AngularApp1.Server.Models;
+using AngularApp1.Server.Models.DTOs;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -90,6 +91,33 @@ namespace AngularApp1.Server.DataService
             return false;
         }
 
+        public void AddCategory(CategoryDTO dto)
+        {
+            var category = new Category
+
+            {
+                Name = dto.Name,
+            };
+            _dbContext.Categories.Add(category);
+            _dbContext.SaveChanges();
+        }
+
+        public bool editcategoriesbyid(int id, CategoryDTO category)
+        {
+            var user = _dbContext.Users.Find(id);
+            if (user ==null)
+            {
+                return false;
+            }
+            else
+            {
+                user.Name=category.Name;
+                _dbContext.SaveChanges();
+                return true;
+            }
+
+
+        }
 
 
     }
