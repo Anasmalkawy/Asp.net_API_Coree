@@ -49,6 +49,6 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
-app.MapUserEndpoints();
+//app.MapUserEndpoints();
 
 app.Run();

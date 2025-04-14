@@ -81,10 +81,10 @@ namespace AngularApp1.Server.DataService
 
         public bool deletecategories(int id)
         {
-            var user = _dbContext.Users.Find(id);
+            var user = _dbContext.Categories.Find(id);
             if (user != null)
             {
-                _dbContext.Users.Remove(user);
+                _dbContext.Categories.Remove(user);
                 _dbContext.SaveChanges();
                 return true;
             }
@@ -104,7 +104,7 @@ namespace AngularApp1.Server.DataService
 
         public bool editcategoriesbyid(int id, CategoryDTO category)
         {
-            var user = _dbContext.Users.Find(id);
+            var user = _dbContext.Categories.Find(id);
             if (user ==null)
             {
                 return false;

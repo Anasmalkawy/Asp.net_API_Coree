@@ -1,26 +1,19 @@
-<h1>all data for categories</h1>
-
-<div *ngFor="let item of data1">
-  <h1>{{item.name}}</h1>
-  <a routerLink="/editcategories/{{item.id}}" class="btn btn-primary" data-mdb-ripple-init>edit</a>
-  <button (click)="delete(item.id)" class="btn btn-danger" data-mdb-ripple-init>delete categories</button>
-</div>
-
+<p>edit-categories works!</p>
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card">
         <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">Add Category</h4>
+          <h4 class="mb-0">Edit Category</h4>
         </div>
         <div class="card-body">
-          <form #addcategory="ngForm" (ngSubmit)="addallcategore(addcategory.value)">
+          <form #addcategory="ngForm" (ngSubmit)="updatecategories(addcategory.value)">
             <div class="mb-3">
               <label for="categoryName" class="form-label">Category Name</label>
               <input type="text" class="form-control" id="categoryName" name="name" ngModel required>
             </div>
             <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary">Add Category</button>
+              <button type="submit" class="btn btn-primary">edit Category</button>
             </div>
           </form>
         </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { UrlserviceService } from '../../Service/urlservice.service';
 
 @Component({
@@ -13,11 +13,23 @@ export class CategoriesComponent {
     this.getallcategories()
   }
 
-  data1:any
+  data1: any
   getallcategories() {
     this._serv.getallcategories().subscribe((data) =>
-    this.data1=data
+      this.data1 = data
     )
+  }
+  addallcategore(data: any) {
+    this._serv.addcategory(data).subscribe(() => {
+      alert("added done");
+      this.getallcategories();
+    })
+  }
+  delete(id: any) {
+    this._serv.deletecategories(id).subscribe(() => {
+      alert("delete cate done");
+    })
+      this.getallcategories()
   }
 
 }

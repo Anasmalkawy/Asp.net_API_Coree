@@ -47,17 +47,17 @@ namespace AngularApp1.Server.Controllers
             return Ok(firstone);
         }
 
-        [HttpDelete("deleteCategories")]
+        [HttpDelete("deleteCategories/{id}")]
         public IActionResult delete(int id)
         {
             var deleteST = _data.deletecategories(id);
             if (deleteST == true)
             {
-                return Ok("delete done");
+                return Ok(id);
             }
             else
             {
-                return NotFound("delete failed");
+                return NotFound();
             }
         }
 
@@ -72,14 +72,14 @@ namespace AngularApp1.Server.Controllers
         }
 
         [HttpPut("editVategories/{id}")]
-        public IActionResult editcategoriesbyid(int id, [FromForm] CategoryDTO category)
+        public IActionResult editcategoriesbyid(int id, [FromBody] CategoryDTO category)
         {
             if (category == null)
                 return BadRequest();
 
             else
             {
-                var userr = editcategoriesbyid(id, category);
+                var userr = _data.editcategoriesbyid(id, category);
                 if (userr == null)
                 {
                     return BadRequest();
